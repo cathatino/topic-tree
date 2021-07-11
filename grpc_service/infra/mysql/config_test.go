@@ -2,19 +2,18 @@ package mysql
 
 import (
 	"testing"
-	"time"
 )
 
 func TestConfig_GetDsn(t *testing.T) {
 	type fields struct {
-		host            string
-		port            string
-		user            string
-		password        string
-		dbName          string
-		maxOpenConns    int
-		maxIdleConns    int
-		connMaxLifetime time.Duration
+		Host            string
+		Port            string
+		User            string
+		Password        string
+		DbName          string
+		MaxOpenConns    int
+		MaxIdleConns    int
+		ConnMaxLifetime duration
 	}
 	tests := []struct {
 		name   string
@@ -24,11 +23,11 @@ func TestConfig_GetDsn(t *testing.T) {
 		{
 			name: "test_for_correct_config_name",
 			fields: fields{
-				host:     "host",
-				port:     "port",
-				user:     "user",
-				password: "password",
-				dbName:   "db_name",
+				Host:     "host",
+				Port:     "port",
+				User:     "user",
+				Password: "password",
+				DbName:   "db_name",
 			},
 			want: "user:password@tcp(host:port)/db_name?charset=utf8",
 		},
@@ -36,14 +35,14 @@ func TestConfig_GetDsn(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := &Config{
-				host:            tt.fields.host,
-				port:            tt.fields.port,
-				user:            tt.fields.user,
-				password:        tt.fields.password,
-				dbName:          tt.fields.dbName,
-				maxOpenConns:    tt.fields.maxOpenConns,
-				maxIdleConns:    tt.fields.maxIdleConns,
-				connMaxLifetime: tt.fields.connMaxLifetime,
+				Host:            tt.fields.Host,
+				Port:            tt.fields.Port,
+				User:            tt.fields.User,
+				Password:        tt.fields.Password,
+				DbName:          tt.fields.DbName,
+				MaxOpenConns:    tt.fields.MaxOpenConns,
+				MaxIdleConns:    tt.fields.MaxIdleConns,
+				ConnMaxLifetime: tt.fields.ConnMaxLifetime,
 			}
 			if got := c.GetDsn(); got != tt.want {
 				t.Errorf("Config.GetDsn() = %v, want %v", got, tt.want)
