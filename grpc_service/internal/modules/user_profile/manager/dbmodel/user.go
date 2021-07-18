@@ -9,11 +9,16 @@ package dbmodel
 // while the login method will be handle in other tables to facilidate the different login mechanism
 // Note: let's start with a non-sharded version of the user table, assuming the user is with small size
 type UserModel struct {
-	UserId      int64  `xorm:"userid autoincr"`
-	Status      int8   `xorm:"status"`
+	UserId      int64  `xorm:"'user_id' autoincr BIGINT(20)"`
+	Status      uint32 `xorm:"'status' not null INT(11)"`
 	AuthMethods string `xorm:"auth_methods"`
 	Profile     string `xorm:"profile"`
 	MetaData    string `xorm:"meta_data"`
-	Ctime       int64  `xorm:"ctime"`
-	Mtime       int64  `xorm:"mtime"`
+	Ctime       uint32 `xorm:"'ctime' not null INT(11)"`
+	Mtime       uint32 `xorm:"'mtime' not null INT(11)"`
+}
+
+// GetTableName returns the table name of UserModel
+func (um UserModel) GetTableName() string {
+	return UserTabName
 }

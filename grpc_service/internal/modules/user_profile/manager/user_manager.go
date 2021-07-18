@@ -23,20 +23,20 @@ func (um UserManager) CreateUser(
 	*dbmodel.UserModel,
 	error,
 ) {
-	currentTimeStampInSecs := time.Now().Unix()
-	userModel := &dbmodel.UserModel{
+	currentTimeStampInSecs := uint32(time.Now().Unix())
+	userModel := dbmodel.UserModel{
 		AuthMethods: authMethods,
 		Profile:     profile,
 		MetaData:    metaData,
 		Ctime:       currentTimeStampInSecs,
 		Mtime:       currentTimeStampInSecs,
 	}
-	affected, err := um.masterEngine.Insert(&userModel)
+	affected, err := um.masterEngine.Table(userModel.GetTableName()).Insert(&userModel)
 	if err != nil {
 		return nil, err
 	}
 	userModel.UserId = affected
-	return userModel, err
+	return &userModel, err
 }
 
 // NewUserManager returns a new UserManager to manipulate the user data
