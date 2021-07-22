@@ -28,6 +28,7 @@ func (um UserManager) CreateUser(
 		AuthMethods: authMethods,
 		Profile:     profile,
 		MetaData:    metaData,
+		Status:      UserStatusActivate,
 		Ctime:       currentTimeStampInSecs,
 		Mtime:       currentTimeStampInSecs,
 	}
